@@ -1,4 +1,14 @@
 Grades::Application.routes.draw do
+  resources :courses do
+    resources :sections
+  end
+
+  resources :terms do
+    resources :sections
+  end
+
+  resources :sections
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
