@@ -1,6 +1,7 @@
 class SectionsController < ApplicationController
   before_action :set_term
   before_action :set_course
+  before_action :set_parent
   before_action :set_section, only: [:show, :edit, :update, :destroy]
 
   # GET /sections
@@ -16,7 +17,15 @@ class SectionsController < ApplicationController
 
   # GET /sections/new
   def new
-    @section = Section.new
+    if @parent
+      @section = @parent.sections.new
+    else
+      @section = Section.new
+    end
+
+    puts @section
+    #set term or course here
+    #@parent.section.new
   end
 
   # GET /sections/1/edit
@@ -26,11 +35,11 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    @section = Section.new(section_params)
+    @section = @parent.sections.build(section_params)
 
     respond_to do |format|
       if @section.save
-        format.html { redirect_to @section, notice: 'Section was successfully created.' }
+        format.html { redirect_to [@parent, @section], notice: 'Section was successfully created.' }
         format.json { render action: 'show', status: :created, location: @section }
       else
         format.html { render action: 'new' }
@@ -66,7 +75,7 @@ class SectionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_section
-      @section = Section.find(params[:id])
+      @section = @parent.sections.find(params[:id])
     end
 
     def set_term
@@ -77,7 +86,11 @@ class SectionsController < ApplicationController
       @course = Course.find(params[:course_id]) if params[:course_id]
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def set_parent
+      @parent = @term if @term
+      @parent = @course if @course
+    end
+
     def section_params
       params.require(:section).permit(:name, :term_id, :course_id)
     end

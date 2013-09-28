@@ -69,6 +69,6 @@ class TermsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def term_params
-      params.require(:term).permit(:name, :start_date, :end_date, sections_attributes: [:name, :course_, :term])
+      params.require(:term).permit(:name, :start_date, :end_date, sections_attributes: [:name, :course_id])
     end
 end
