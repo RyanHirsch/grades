@@ -5,22 +5,22 @@
       <%= f.text_field :name, :class => 'text_field' %>
     </div>
   </div>
+  <% unless @term %>
   <div class="control-group">
     <%= f.label :term_id, :class => 'control-label' %>
     <div class="controls">
       <%= collection_select :section, :term_id, Term.all, :id, :name, prompt: true %>
     </div>
   </div>
+  <% end %>
+  <% unless @course %>
   <div class="control-group">
     <%= f.label :course_id, :class => 'control-label' %>
     <div class="controls">
-      <% if @course %>
-      <%= @course.name %>
-      <% else %>
-      <%= f.text_field :course_id, :class => 'text_field' %>
-      <% end %>
+      <%= collection_select :section, :course_id, Course.all, :id, :name, prompt: true %>
     </div>
   </div>
+  <% end %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>

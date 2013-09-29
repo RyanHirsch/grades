@@ -22,8 +22,6 @@ class SectionsController < ApplicationController
     else
       @section = Section.new
     end
-
-    puts @section
     #set term or course here
     #@parent.section.new
   end
@@ -53,7 +51,7 @@ class SectionsController < ApplicationController
   def update
     respond_to do |format|
       if @section.update(section_params)
-        format.html { redirect_to @section, notice: 'Section was successfully updated.' }
+        format.html { redirect_to [@parent, @section], notice: 'Section was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -67,7 +65,7 @@ class SectionsController < ApplicationController
   def destroy
     @section.destroy
     respond_to do |format|
-      format.html { redirect_to sections_url }
+      format.html { redirect_to @parent }
       format.json { head :no_content }
     end
   end
@@ -75,7 +73,11 @@ class SectionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_section
-      @section = @parent.sections.find(params[:id])
+      if @parent
+        @section = @parent.sections.find(params[:id])
+      else
+        @section = Section.find(params[:id])
+      end
     end
 
     def set_term
