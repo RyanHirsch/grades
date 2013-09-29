@@ -1,4 +1,5 @@
 class TermsController < ApplicationController
+  add_breadcrumb "Terms", :terms_path
   before_action :set_term, only: [:show, :edit, :update, :destroy]
 
   # GET /terms
@@ -15,10 +16,12 @@ class TermsController < ApplicationController
   # GET /terms/new
   def new
     @term = Term.new
+    add_breadcrumb "New Term", :new_term_path
   end
 
   # GET /terms/1/edit
   def edit
+    add_breadcrumb "Edit Term", :edit_term_path
   end
 
   # POST /terms
@@ -65,6 +68,7 @@ class TermsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_term
       @term = Term.find(params[:id])
+      add_breadcrumb @term.name, @term
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

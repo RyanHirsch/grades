@@ -7,9 +7,9 @@
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @section.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:term_id) %>:</strong></dt>
-  <dd><%= @section.term.name %></dd>
+  <dd><%= link_to @section.term.name, @section.term %></dd>
   <dt><strong><%= model_class.human_attribute_name(:course_id) %>:</strong></dt>
-  <dd><%= @section.course.name %></dd>
+  <dd><%= link_to @section.course.name, @section.course %></dd>
 </dl>
 
 <div class="form-actions">

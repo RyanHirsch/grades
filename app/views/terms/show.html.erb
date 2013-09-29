@@ -23,3 +23,9 @@
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
 </div>
+<ul class="sections">
+  <% @term.sections.each do |section| %>
+    <%= link_to section.name, [@term, section] %>
+  <% end %>
+</ul>
+<%= link_to "New Section", new_term_section_path(@term) %>
